@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
 
     this.auth.login(credentials.email, credentials.password).subscribe({
         next: (data) => {
-          console.log(data);
 
           this.store.dispatch(login({user: data}));
 
