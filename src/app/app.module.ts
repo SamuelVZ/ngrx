@@ -55,7 +55,7 @@ const routes: Routes = [
     MatListModule,
     MatToolbarModule,
     AuthModule.forRoot(),
-    StoreModule.forRoot(reducers, {metaReducers}),
+    StoreModule.forRoot(reducers, {metaReducers, runtimeChecks: {strictStateImmutability: true}}), //runtimechecks state and acctions already on by default
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot({stateKey: 'router', routerState: RouterState.Minimal})
