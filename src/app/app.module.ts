@@ -55,6 +55,7 @@ const routes: Routes = [
     MatListModule,
     MatToolbarModule,
     AuthModule.forRoot(),
+    //metareducer is a reducer but it is going to run before all reducers and actions
     StoreModule.forRoot(reducers, {metaReducers, runtimeChecks: {strictStateImmutability: true}}), //runtimechecks state and acctions already on by default
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),
