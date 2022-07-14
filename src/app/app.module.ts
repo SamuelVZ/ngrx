@@ -59,7 +59,8 @@ const routes: Routes = [
     StoreModule.forRoot(reducers, {metaReducers, runtimeChecks: {strictStateImmutability: true}}), //runtimechecks state and acctions already on by default
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),
-    StoreRouterConnectingModule.forRoot({stateKey: 'router', routerState: RouterState.Minimal})
+    StoreRouterConnectingModule.forRoot({stateKey: 'router', routerState: RouterState.Minimal}),
+    EntityDataModule.forRoot({}),
   ],
   bootstrap: [AppComponent]
 })
