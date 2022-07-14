@@ -46,7 +46,10 @@ export const coursesRoutes: Routes = [
 
 const entityMetadata: EntityMetadataMap = {
   Course: {
-    sortComparer: compareCourses
+    sortComparer: compareCourses,
+    entityDispatcherOptions: {
+      optimisticUpdate : true //updates happen inmediatly on browser instead of waiting for the backend to have a response
+    }
   }
 };
 
@@ -98,7 +101,7 @@ export class CoursesModule {
     private coursesDataService: CoursesDataService
     ) {
     eds.registerMetadataMap(entityMetadata);
-    entityDataService.registerService('Course', coursesDataService) //first the entity that the service corresponds to
+    entityDataService.registerService('Course', coursesDataService); //first the entity that the service corresponds to
   }
 
 

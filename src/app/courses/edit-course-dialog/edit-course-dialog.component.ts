@@ -4,6 +4,7 @@ import {Course} from '../model/course';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {CoursesHttpService} from '../services/courses-http.service';
+import { CourseEntityService } from '../services/course-entity.service';
 
 @Component({
   selector: 'course-dialog',
@@ -26,7 +27,7 @@ export class EditCourseDialogComponent {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditCourseDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data,
-    private coursesService: CoursesHttpService) {
+    private coursesEntityService: CourseEntityService) {
 
     this.dialogTitle = data.dialogTitle;
     this.course = data.course;
@@ -63,10 +64,12 @@ export class EditCourseDialogComponent {
       ...this.form.value
     };
 
-    this.coursesService.saveCourse(course.id, course)
-      .subscribe(
-        () => this.dialogRef.close()
-      )
+    if(this.mode == 'update'){
+
+      this.coursesEntityService.update(course); //update the store and make a put request to the back end
+
+      this.dialogRef.close();
+    }
 
 
   }
