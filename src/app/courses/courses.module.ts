@@ -24,10 +24,11 @@ import {RouterModule, Routes} from '@angular/router';
 import { EntityDataService, EntityDefinitionService, EntityMetadataMap} from '@ngrx/data';
 import {compareCourses, Course} from './model/course';
 
-import {compareLessons, Lesson} from './model/lesson';
+import { compareLessons } from './model/lesson';
 import { CourseEntityService } from './services/course-entity.service';
 import { CoursesResolver } from './services/courses.resolver';
 import { CoursesDataService } from './services/courses-data.service';
+import { LessonEntityService } from './services/lesson-entity.service';
 
 
 export const coursesRoutes: Routes = [
@@ -50,6 +51,9 @@ const entityMetadata: EntityMetadataMap = {
     entityDispatcherOptions: {
       optimisticUpdate : true //updates happen inmediatly on browser instead of waiting for the backend to have a response
     }
+  },
+  Lesson: {
+    sortComparer: compareLessons
   }
 };
 
@@ -89,6 +93,7 @@ const entityMetadata: EntityMetadataMap = {
   providers: [
     CoursesHttpService,
     CourseEntityService,
+    LessonEntityService,
     CoursesResolver,
     CoursesDataService,
   ]
