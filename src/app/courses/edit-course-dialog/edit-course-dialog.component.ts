@@ -70,6 +70,19 @@ export class EditCourseDialogComponent {
 
       this.dialogRef.close();
     }
+    else if(this.mode == 'create') {
+
+        this.coursesEntityService.add(course).subscribe(
+          newcourse => {
+            console.log("new course: ", newcourse);
+            this.dialogRef.close();
+          }
+
+        );
+
+
+    }
+
 
 
   }
