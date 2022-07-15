@@ -18,6 +18,8 @@ export class CourseComponent implements OnInit {
 
   course$: Observable<Course>;
 
+  loading$: Observable<boolean>;
+
   lessons$: Observable<Lesson[]>;
 
   displayedColumns = ['seqNo', 'description', 'duration'];
@@ -39,13 +41,30 @@ export class CourseComponent implements OnInit {
       map(courses => courses.find(course => course.url == courseUrl))
     );
 
-    this.lessons$ = of([]);
+    this.lessons$ = this.lessonEntityService.entities$.pipe(
+      withLatestFrom(this.course$), //to combine the courses obserbable to obtain course data
+      tap(([lessons, course]) => {
+        if(this.nextPage == 0){
+          this.loadLessonsPage(course)
+        }
+      }), //tap is for side effects
+      map(([lessons, course]) => lessons.filter(lesson => lesson.courseId == course.id))
+    );
+
+    this.loading$ = this.lessonEntityService.loading$.pipe(delay(0));
 
   }
 
 
   loadLessonsPage(course: Course) {
 
+    this.lessonEntityService.getWithQuery({
+      'courseId': course.id.toString(),
+      'pageNumber': this.nextPage.toString(),
+      'pageSize': '3'
+    });
+
+    this.nextPage =+ 1;
   }
 
 }
